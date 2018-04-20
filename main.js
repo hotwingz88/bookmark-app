@@ -44,5 +44,55 @@ function saveBookMark(e){
 
 
 	// prevent form from submitting
+	
+       //fetch the bookmarks
+	fetchBookMarks();
+	
 	e.preventDefault();
 }	
+
+function fetchBookMarks(){
+	
+	// Get bookMarks from localStorage
+	var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+	
+	// Get thr output id
+	var bookmarksResult = document.querySelector('#bookmarksResult');
+	
+	// Build output
+	bookmarksResult.innerHTML = '';
+	// Loop through bookmarks
+	for(var i=0;i<bookmarks.length;i++){
+	    var name = bookmarks[i].name;
+	    var url = bookmarks[i].url;
+		
+	    bookmarks.innerHTML += '<div><h3>' + name '' + 
+		    		   '<a class="btn btn-success" href="' +url + '">Visit</a>' +
+		                   '<a class="btn btn-danger" onclick="deleteBookmark(\'' + url + '\') href="#">Delete</a>'
+		                   '</h3></div>'
+		
+	}
+	
+}
+
+
+function deleteBookmark(url){
+    // Get bookmarks from localStorage
+    var bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+   
+    //loop through bookmarks
+   for(var i=0;i<bookmarks.length;i++){
+       if(bookmarks[i].url == url) {
+           //  Remove bookmark from bookmarks array
+       }   bookmarks.splice(i, 1);
+	   break;
+	  
+    
+   }
+		
+ //   Rest bookmarks back to localStorage
+localStorage.setItem('bookmarks', JSON.stringify(bookmarks))
+ 
+// Re-fetch bookmarksResults
+    fetchBookMarks();
+}
